@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  dummy-nginx:
+    container_name: dummy-nginx
+    image: dummy-nginx
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    volumes: 
+      - ../data/certbot/conf:/etc/letsencrypt 
+      - ../data/certbot/www:/var/www/certbot
+    ports:
+      - 80:80
+    depends_on:
+      - dummy-certbot
+  dummy-certbot:
+    container_name: dummy-certbot
+    image: certbot/certbot:v1.7.0
+    volumes:
+      - ../data/certbot/conf:/etc/letsencrypt 
+      - ../data/certbot/www:/var/www/certbot
