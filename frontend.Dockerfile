@@ -3,7 +3,7 @@ FROM node:21.6.1-alpine AS build-stage
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY frontend .
 
 RUN npm install
 
