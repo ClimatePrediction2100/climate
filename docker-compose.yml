@@ -3,7 +3,7 @@ version: '3.8'
 services:
   frontend:
     container_name: climate-frontend
-    image: climate-frontend
+    image: localhost:5000/climate-frontend
     build:
       context: .
       dockerfile: frontend.Dockerfile
@@ -30,7 +30,7 @@ services:
 
   backend:
     container_name: climate-backend
-    image: climate-backend
+    image: loaclhost:5000/climate-backend
     build:
       context: .
       dockerfile: backend.Dockerfile
@@ -47,7 +47,7 @@ services:
 
   certbot:
     container_name: climate-certbot
-    image: certbot/certbot:v1.7.0
+    image: localhost:5000/certbot/certbot:v1.7.0
     volumes:
       - type: volume
         source: certbot_conf
