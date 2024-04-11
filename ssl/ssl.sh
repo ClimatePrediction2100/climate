@@ -10,11 +10,33 @@ EMAIL=$1
 shift
 DOMAINS=("$@")
 
-# Step 1: Start the dummy nginx and certbot containers
+# Step 1: Generate the ssl.conf file with the provided domains
+SSL_CONF_FILE="nginx.conf"
+
+echo "Generating nginx.conf with the provided domains..."
+cat > "$SSL_CONF_FILE" <<EOF
+server {
+    listen 80;
+    server_name $(echo "${DOMAINS[@]}" | xargs);
+
+    location /check {
+        default_type text/plain;
+        return 200 'OK';
+    }
+
+    location /.well-known/acme-challenge/ {
+        root /var/www/certbot;
+    }
+}
+EOF
+
+echo "ssl.conf has been generated with the provided domains."
+
+# Step 2: Start the dummy nginx and certbot containers
 # Docker version 25.0.3
 docker compose up --build -d
 
-# Step 2: Check if the server is responding by making HTTP requests to the specified URL
+# Step 3: Check if the server is responding by making HTTP requests to the specified URL
 for DOMAIN in "${DOMAINS[@]}"; do
     url="http://$DOMAIN/check"
     max_attempts=50
@@ -43,7 +65,7 @@ done
 
 sleep 2
 
-# Step 3: Download recommended TLS parameters and save them to the certbot configuration directory
+# Step 4: Download recommended TLS parameters and save them to the certbot configuration directory
 mkdir -p ../data/certbot/conf
 curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf > ../data/certbot/conf/options-ssl-nginx.conf
 curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/certbot/ssl-dhparams.pem > ../data/certbot/conf/ssl-dhparams.pem
@@ -60,28 +82,6 @@ case "$choice" in
     exit 0
     ;;
 esac
-
-# Step 4: Generate the ssl.conf file with the provided domains
-SSL_CONF_FILE="../ssl.conf"
-
-echo "Generating ssl.conf with the provided domains..."
-cat > "$SSL_CONF_FILE" <<EOF
-server {
-    listen 80;
-    server_name $(echo "${DOMAINS[@]}" | xargs);
-
-    location /check {
-        default_type text/plain;
-        return 200 'OK';
-    }
-
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot;
-    }
-}
-EOF
-
-echo "ssl.conf has been generated with the provided domains."
 
 # Step 5: Request the SSL certificate
 domains_args=()
