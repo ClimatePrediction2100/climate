@@ -32,7 +32,7 @@ echo "nginx.conf has been generated with the provided domains."
 
 # Step 2: Deploy the dummy nginx and certbot services using Docker Swarm
 echo "Deploying the dummy nginx and certbot services..."
-docker stack deploy -c docker-compose.yml ssl-stack
+docker stack deploy -c manager.docker-compose.yml ssl-stack
 
 # Step 3: Check if the server is responding by making HTTP requests to the specified URL
 for DOMAIN in "${DOMAINS[@]}"; do
