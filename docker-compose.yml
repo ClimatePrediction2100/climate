@@ -68,4 +68,6 @@ networks:
 volumes:
   climate:
   certbot_conf:
+    external: true
   certbot_www:
+    external: true
