@@ -12,9 +12,17 @@ services:
     networks:
       - climate
     volumes:
-      - climate:/usr/climate
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - type: volume
+        source: climate
+        target: /usr/climate
+
+      - type: volume
+        source: data/certbot/conf
+        target: /etc/letsencrypt
+
+      - type: volume
+        source: data/certbot/www
+        target: /var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     deploy:
       placement:
@@ -30,7 +38,9 @@ services:
     networks:
       - climate
     volumes:
-      - climate:/usr/climate
+      - type: volume
+        source: climate
+        target: /usr/climate
     deploy:
       placement:
         constraints:
@@ -40,8 +50,13 @@ services:
     container_name: climate-certbot
     image: certbot/certbot:v1.7.0
     volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - type: volume
+        source: data/certbot/conf
+        target: /etc/letsencrypt
+
+      - type: volume
+        source: data/certbot/www
+        target: /var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     deploy:
       placement:
@@ -54,3 +69,9 @@ networks:
 
 volumes:
   climate:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data
