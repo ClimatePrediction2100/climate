@@ -49,13 +49,13 @@ for DOMAIN in "${DOMAINS[@]}"; do
             echo "Received 200 OK response for $DOMAIN."
             break
         else
-            echo "Did not receive 200 OK response for $DOMAIN. Received $response instead. Retrying...($count)"
+            echo "Did not receive 200 OK response for $DOMAIN. Received $response instead. Retrying...($(($count + 1)))"
             count=$((count+1))
             sleep 2
         fi
     done
 
-    if [ $count -gt $max_attempts ]; then
+    if [ $count -eq $max_attempts ]; then
         echo "Server is not responding for $DOMAIN after $max_attempts attempts."
         exit 1
     else
