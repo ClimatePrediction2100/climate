@@ -10,8 +10,6 @@ services:
     ports:
       - 80:80
       - 443:443
-    networks:
-      - ingress
     volumes:
       - type: volume
         source: climate
@@ -34,8 +32,6 @@ services:
     build:
       context: .
       dockerfile: backend.Dockerfile
-    networks:
-      - ingress
     volumes:
       - type: volume
         source: climate
@@ -48,8 +44,6 @@ services:
   certbot:
     container_name: climate-certbot
     image: certbot/certbot:v1.7.0
-    networks:
-      - ingress
     volumes:
       - type: bind
         source: /home/climate/data/certbot/conf
@@ -62,10 +56,6 @@ services:
       placement:
         constraints:
           - node.role == worker
-
-networks:
-  ingress:
-    external: true
 
 volumes:
   climate:
