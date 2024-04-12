@@ -3,7 +3,7 @@ version: '3.8'
 services:
   frontend:
     container_name: climate-frontend
-    image: climate-frontend
+    image: cliamteprediction.xyz:5000/climate-frontend
     build:
       context: .
       dockerfile: frontend.Dockerfile
@@ -16,11 +16,11 @@ services:
       - type: volume
         source: climate
         target: /usr/climate
-      - type: volume
-        source: certbot_conf
+      - type: bind
+        source: /home/climate/data/certbot/conf
         target: /etc/letsencrypt
-      - type: volume
-        source: certbot_www
+      - type: bind
+        source: /home/climate/data/certbot/www
         target: /var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     deploy:
@@ -30,7 +30,7 @@ services:
 
   backend:
     container_name: climate-backend
-    image: climate-backend
+    image: cliamteprediction.xyz:5000/climate-backend
     build:
       context: .
       dockerfile: backend.Dockerfile
@@ -49,11 +49,11 @@ services:
     container_name: climate-certbot
     image: certbot/certbot:v1.7.0
     volumes:
-      - type: volume
-        source: certbot_conf
+      - type: bind
+        source: /home/climate/data/certbot/conf
         target: /etc/letsencrypt
-      - type: volume
-        source: certbot_www
+      - type: bind
+        source: /home/climate/data/certbot/www
         target: /var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     deploy:
@@ -67,18 +67,3 @@ networks:
 
 volumes:
   climate:
-    driver: local
-
-  certbot_conf:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: addr=climateprediction.xyz,nolock,soft,rw
-      device: ":data/certbot/conf"
-
-  certbot_www:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: addr=climateprediction.xyz,nolock,soft,rw
-      device: ":data/certbot/www"
