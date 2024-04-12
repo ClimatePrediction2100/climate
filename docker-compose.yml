@@ -67,7 +67,18 @@ networks:
 
 volumes:
   climate:
+    driver: local
+
   certbot_conf:
-    external: true
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: addr=climateprediction.xyz,nolock,soft,rw
+      device: ":data/certbot/conf"
+
   certbot_www:
-    external: true
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: addr=climateprediction.xyz,nolock,soft,rw
+      device: ":data/certbot/www"
