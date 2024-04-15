@@ -24,7 +24,7 @@ RUN poetry run alembic upgrade head
 EXPOSE 8000
 
 # Create directory for socket file
-RUN mkdir -p /usr/climate
+RUN mkdir -p /var/data/backend
 
 # Run the FastAPI server using Gunicorn
-CMD ["gunicorn", "--bind", "unix:/usr/climate/backend.sock", "app.main:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--workers", "2"]
+CMD ["gunicorn", "--bind", "unix://var/data/backend/server.sock", "app.main:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--workers", "2"]

@@ -11,16 +11,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - type: bind
-        source: /usr/climate
-        target: /usr/climate
-    secrets:
-      - source: ssl_cert
-        target: /etc/nginx/fullchain.pem
-      - source: ssl_cert_key
-        target: /etc/nginx/privkey.pem
-      - source: ssl_conf
-        target: /etc/nginx/options-ssl-nginx.conf
+      - data:/var/data
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     deploy:
       placement:
@@ -34,9 +25,7 @@ services:
       context: .
       dockerfile: backend.Dockerfile
     volumes:
-      - type: bind
-        source: /usr/climate
-        target: /usr/climate
+      - data:/var/data
     deploy:
       placement:
         constraints:
@@ -46,24 +35,18 @@ services:
     container_name: climate-certbot
     image: certbot/certbot:v1.7.0
     volumes:
-      - type: bind
-        source: ./data/certbot/conf
-        target: /etc/letsencrypt
-      - type: bind
-        source: ./data/certbot/www
-        target: /var/www/certbot
+      - data/certbot/conf:/etc/letsencrypt
+      - data/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     deploy:
       placement:
         constraints:
-          - node.role == manager
+          - node.role == worker
 
 volumes:
-  climate:
-secrets:
-  ssl_cert:
-    file: ./data/certbot/conf/live/climateprediction.xyz/fullchain.pem
-  ssl_cert_key:
-    file: ./data/certbot/conf/live/climateprediction.xyz/privkey.pem
-  ssl_conf:
-    file: ./data/certbot/conf/options-ssl-nginx.conf
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /var/data
+      o: bind

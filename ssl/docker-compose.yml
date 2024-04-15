@@ -7,8 +7,8 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes: 
-      - ../data/certbot/conf:/etc/letsencrypt 
-      - ../data/certbot/www:/var/www/certbot
+      - /var/data/certbot/conf:/etc/letsencrypt 
+      - /var/data/certbot/www:/var/www/certbot
     ports:
       - 80:80
     depends_on:
@@ -17,5 +17,5 @@ services:
     container_name: dummy-certbot
     image: certbot/certbot:v1.7.0
     volumes:
-      - ../data/certbot/conf:/etc/letsencrypt 
-      - ../data/certbot/www:/var/www/certbot
+      - /var/data/certbot/conf:/etc/letsencrypt 
+      - /var/data/certbot/www:/var/www/certbot

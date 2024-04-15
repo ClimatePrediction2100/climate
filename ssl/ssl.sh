@@ -66,9 +66,9 @@ done
 sleep 2
 
 # Step 4: Download recommended TLS parameters and save them to the certbot configuration directory
-sudo mkdir -p ../data/certbot/conf
-sudo curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf > ../data/certbot/conf/options-ssl-nginx.conf
-sudo curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/certbot/ssl-dhparams.pem > ../data/certbot/conf/ssl-dhparams.pem
+sudo mkdir -p /var/data/certbot/conf
+sudo curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf > /var/data/certbot/conf/options-ssl-nginx.conf
+sudo curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/certbot/ssl-dhparams.pem > /var/data/certbot/conf/ssl-dhparams.pem
 
 read -p "Do you want to issue the SSL certificate? [y/n]: " choice
 
