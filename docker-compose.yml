@@ -3,7 +3,7 @@ version: '3.8'
 services:
   frontend:
     container_name: climate-frontend
-    image: 3.47.47.4:5000/climate-frontend
+    image: climateprediction.xyz:5000/climate-frontend
     build:
       context: .
       dockerfile: frontend.Dockerfile
@@ -20,7 +20,7 @@ services:
 
   backend:
     container_name: climate-backend
-    image: 3.47.47.4:5000/climate-backend
+    image: climateprediction.xyz:5000/climate-backend
     build:
       context: .
       dockerfile: backend.Dockerfile
