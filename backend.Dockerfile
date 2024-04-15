@@ -27,4 +27,4 @@ EXPOSE 8000
 RUN mkdir -p /var/data/backend
 
 # Run the FastAPI server using Gunicorn
-CMD ["gunicorn", "--bind", "unix://var/data/backend/server.sock", "app.main:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--workers", "2"]
+CMD ["gunicorn", "--bind", "unix:/var/data/backend/server.sock", "app.main:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--workers", "2"]
