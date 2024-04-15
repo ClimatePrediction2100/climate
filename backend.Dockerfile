@@ -20,11 +20,5 @@ COPY backend .
 # Create temporal database for test
 RUN poetry run alembic upgrade head
 
-# Expose the port on which the FastAPI server will run
-EXPOSE 8000
-
-# Create directory for socket file
-RUN mkdir -p /var/data/backend
-
 # Run the FastAPI server using Gunicorn
-CMD ["gunicorn", "--bind", "unix:/var/data/backend/server.sock", "app.main:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--workers", "2"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app.main:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--workers", "2"]
