@@ -12,7 +12,7 @@ services:
       - 443:443
     volumes:
       - type: bind
-        source: ./data/backend
+        source: /usr/climate
         target: /usr/climate
     secrets:
       - source: ssl_cert
@@ -35,7 +35,7 @@ services:
       dockerfile: backend.Dockerfile
     volumes:
       - type: bind
-        source: ./data/backend
+        source: /usr/climate
         target: /usr/climate
     deploy:
       placement:
