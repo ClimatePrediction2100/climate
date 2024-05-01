@@ -59,7 +59,7 @@ services:
     networks:
       - overnet
     deploy:
-      plcament:
+      placament:
         constraints:
           - node.role == manager
 
