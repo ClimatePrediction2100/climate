@@ -20,8 +20,6 @@ services:
       placement:
         constraints:
           - node.role == worker
-    group_add:
-      - docker
 
   backend:
     container_name: climate-backend
@@ -37,8 +35,6 @@ services:
       placement:
         constraints:
           - node.role == worker
-    group_add:
-    - docker
 
   certbot:
     container_name: climate-certbot
@@ -53,8 +49,6 @@ services:
       placement:
         constraints:
           - node.role == manager
-    group_add:
-      - docker
 
   jenkins:
     container_name: climate-jenkins
@@ -68,8 +62,6 @@ services:
       placement:
         constraints:
           - node.role == manager
-    group_add:
-      - docker
 
 networks:
   overnet:
