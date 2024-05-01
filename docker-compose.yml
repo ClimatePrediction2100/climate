@@ -62,6 +62,7 @@ services:
       placement:
         constraints:
           - node.role == manager
+    user: "jenkins:docker"
 
 networks:
   overnet:
