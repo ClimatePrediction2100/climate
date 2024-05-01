@@ -48,7 +48,20 @@ services:
     deploy:
       placement:
         constraints:
-          - node.role == worker
+          - node.role == manager
+
+  jenkins:
+    container_name: climate-jenkins
+    image: jenkins/jenkins:alpine3.19-jdk21
+    command: java -jar /usr/share/jenkins/jenkins.war
+    volumes:
+      - /var/data/jenkins:/var/jenkins_home
+    networks:
+      - overnet
+    deploy:
+      plcament:
+        constraints:
+          - node.role == manager
 
 networks:
   overnet:
