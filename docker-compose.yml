@@ -20,6 +20,7 @@ services:
       placement:
         constraints:
           - node.role == worker
+      endpoint_mode: dnsrr
 
   backend:
     container_name: climate-backend
@@ -35,6 +36,8 @@ services:
       placement:
         constraints:
           - node.role == worker
+      endpoint_mode: dnsrr
+
 
   certbot:
     container_name: climate-certbot
@@ -49,6 +52,7 @@ services:
       placement:
         constraints:
           - node.role == manager
+      endpoint_mode: dnsrr
 
   jenkins:
     container_name: climate-jenkins
@@ -62,6 +66,7 @@ services:
       placement:
         constraints:
           - node.role == manager
+      endpoint_mode: dnsrr
 
 networks:
   overnet:
