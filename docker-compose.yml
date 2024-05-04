@@ -67,5 +67,3 @@ services:
 networks:
   overnet:
     driver: overlay
-    driver_opts:
-      encrypted: "true"
