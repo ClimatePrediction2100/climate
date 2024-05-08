@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.457-jdk21
+FROM jenkins/jenkins:latest-jdk17
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NOWARNINGS="yes"
