@@ -35,7 +35,10 @@ services:
 
   jenkins:
     container_name: climate-jenkins
-    image: jenkins/jenkins:alpine3.19-jdk21
+    image: climateprediction.xyz:5000/climate-jenkins
+    build:
+      context: .
+      dockerfile: jenkins.Dockerfile
     command: "java -jar /usr/share/jenkins/jenkins.war"
     volumes:
       - /var/data/jenkins:/var/jenkins_home
