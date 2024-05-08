@@ -17,6 +17,4 @@ COPY --from=build-stage /usr/src/app/build /usr/share/nginx/html
 
 COPY nginx/climate.conf /etc/nginx/conf.d/
 
-EXPOSE 80 443
-
 CMD ["nginx", "-g", "daemon off;"]
