@@ -30,4 +30,6 @@ RUN apt-get install -y docker-compose-plugin
 RUN if [ -e /var/run/docker.sock ]; then chown jenkins:jenkins /var/run/docker.sock; fi
 RUN usermod -aG docker jenkins
 
+RUN usermod -aG systemd-journal jenkins          
+
 USER jenkins
