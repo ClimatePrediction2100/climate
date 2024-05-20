@@ -28,7 +28,7 @@ RUN apt-get update
 RUN apt-get install -y docker-compose-plugin
 
 RUN usermod -aG docker jenkins
-RUN groupadd 994
+RUN groupadd -g 994 tempgroup
 RUN usermod -aG 994 jenkins
 
 USER jenkins
