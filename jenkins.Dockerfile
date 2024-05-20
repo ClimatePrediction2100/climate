@@ -20,8 +20,8 @@ RUN echo \
 
 RUN apt-get update
 RUN apt-get install -y \
-    docker-ce=5:26.0.1-1~debian.12~bookworm \
-    docker-ce-cli=5:26.0.1-1~debian.12~bookworm \
+    docker-ce=5:26.1.3-1~debian.12~bookworm \
+    docker-ce-cli=5:26.1.3-1~debian.12~bookworm \
     containerd.io
 
 RUN apt-get update
