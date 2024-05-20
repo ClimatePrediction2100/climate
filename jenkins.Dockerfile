@@ -27,7 +27,6 @@ RUN apt-get install -y \
 RUN apt-get update
 RUN apt-get install -y docker-compose-plugin
 
-RUN groupadd docker
 RUN usermod -aG docker jenkins
     
 USER jenkins
