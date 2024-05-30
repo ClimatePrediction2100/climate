@@ -12,7 +12,7 @@ RUN pip install poetry
 
 # Install project dependencies using Poetry
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-dev
+    && poetry install
 
 RUN poetry add gunicorn
 RUN poetry add uvicorn
