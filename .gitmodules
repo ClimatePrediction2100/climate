@@ -4,3 +4,6 @@
 [submodule "frontend"]
 	path = frontend
 	url = https://github.com/ClimatePrediction2100/frontend.git
+[submodule "database"]
+	path = database
+	url = https://github.com/ClimatePrediction2100/database.git
