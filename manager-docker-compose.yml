@@ -50,6 +50,21 @@ services:
         constraints:
           - node.role == manager
 
+  database:
+    container_name: climate-database
+    image: climateprediction.xyz:5000/climate-database
+    build:
+      context: .
+      dockerfile: database.Dockerfile
+    networks:
+      - overnet
+    volumes:
+      - /var/database:/app/data
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
 networks:
   overnet:
     external: true
