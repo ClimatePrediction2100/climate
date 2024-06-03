@@ -17,8 +17,8 @@ RUN poetry config virtualenvs.create false \
 # Copy the application code to the working directory
 COPY database .
 
-# Check if 'data' directory exists, if not install make and create 'data' directory
-RUN if [ ! -d "data" ]; then \
+# Check if 'data' directory does not exist or is empty, if so, install make and run make
+RUN if [ ! -d "data" ] || [ -z "$(ls -A data)" ]; then \
     apt-get update && \
     apt-get install -y make && \
     make; \
