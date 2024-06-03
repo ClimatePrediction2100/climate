@@ -18,7 +18,7 @@ RUN poetry config virtualenvs.create false \
 COPY database .
 
 CMD apt-get update && \
-    apt-get install -y make && \
+    apt-get install -y make wget && \
     if [ ! -d "data" ] || [ -z "$(ls -A data)" ]; then \
         make; \
     fi && \
