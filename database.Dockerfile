@@ -14,11 +14,15 @@ RUN pip install poetry
 RUN poetry config virtualenvs.create false \
     && poetry install
 
-RUN poetry add gunicorn
-RUN poetry add uvicorn
-
 # Copy the application code to the working directory
 COPY database .
 
-# Run the Flask server using Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "server:app", "--worker-class", "uvicorn.workers.UvicornWorker", "--workers", "2"]
+# Check if 'data' directory exists, if not install make and create 'data' directory
+RUN if [ ! -d "data" ]; then \
+    apt-get update && \
+    apt-get install -y make && \
+    make; \
+    fi
+
+# Run the Flask server
+CMD ["python", "server.py"]
