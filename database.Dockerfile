@@ -17,9 +17,13 @@ RUN poetry config virtualenvs.create false \
 # Copy the application code to the working directory
 COPY database .
 
+# Run the Flask server and checking for data directory and running make if necessary
 CMD apt-get update && \
     apt-get install -y make wget && \
     if [ ! -d "data" ] || [ -z "$(ls -A data)" ]; then \
+        echo "Running make..." && \
         make; \
+    else \
+        echo "Data directory exists and is not empty"; \
     fi && \
     python server.py
