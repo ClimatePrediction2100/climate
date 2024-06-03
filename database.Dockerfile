@@ -20,6 +20,8 @@ COPY database .
 # Run the Flask server and checking for data directory and running make if necessary
 CMD apt-get update && \
     apt-get install -y make wget && \
+    echo "Checking data directory..." && \
+    ls -l data && \
     if [ ! -d "data" ] || [ -z "$(ls -A data)" ]; then \
         echo "Running make..." && \
         make; \
